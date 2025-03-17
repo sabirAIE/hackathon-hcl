@@ -37,7 +37,7 @@ export default function Signup() {
         console.log(formData);
         try {
             const formData = { name, email, phone, password, role };
-             const response=await API.post("signup", formData);
+             const response=await API.post("auth/signup", formData);
             navigate("/login");
         } catch (error) {
             console.log(error);

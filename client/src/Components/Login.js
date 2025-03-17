@@ -23,7 +23,7 @@ export default function Login() {
         e.preventDefault();
         console.log(formData);
         try {
-            const { data } = await API.post("login",formData);
+            const { data } = await API.post("auth/login",formData);
             localStorage.setItem("token", data.token);
             localStorage.setItem("user", data.user);
             setUser(data.user);

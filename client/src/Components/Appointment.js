@@ -3,6 +3,7 @@ import { TextField, Select, MenuItem, Button, FormControl, InputLabel, Container
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { AuthContext } from '../ApiData/AuthContext';
 import axios from 'axios';
+import API from '../ApiData/Api';
 
 const defaultTheme = createTheme();
 
@@ -28,9 +29,9 @@ const Appointment = () => {
             notes: reason, 
         };
 
-        try {
+        try { 
       
-            const response = await axios.post('http://localhost:5000/appointments', appointmentData);
+            const response = await API.post('appointments/', appointmentData);
             console.log('Appointment created:', response.data);
             alert('Appointment successfully booked!');
         } catch (error) {
