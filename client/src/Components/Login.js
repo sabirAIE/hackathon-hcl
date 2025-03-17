@@ -15,8 +15,6 @@ import { useState, useContext } from "react";
 import { AuthContext } from '../ApiData/AuthContext';
 import API from '../ApiData/Api';
 
-
-
 const defaultTheme = createTheme();
 
 export default function Login() {
@@ -26,14 +24,15 @@ export default function Login() {
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        try {
-            const { data } = await API.post("/auth/login", formData);
-            localStorage.setItem("token", data.token);
-            setUser(data.user);
-            navigate("/dashboard");
-        } catch (error) {
-            alert("Login failed!");
-        }
+        console.log(formData)
+        // try {
+        //     const { data } = await API.post("/auth/login", formData);
+        //     localStorage.setItem("token", data.token);
+        //     setUser(data.user);
+        //     navigate("/dashboard");
+        // } catch (error) {
+        //     alert("Login failed!");
+        // }
     };
 
     return (
@@ -52,11 +51,12 @@ export default function Login() {
                     <Typography component="h1" variant="h5">
                         Log in
                     </Typography>
-                    <Box component="form" onSubmit={handleLogin} noValidate sx={{ mt: 1 }}>
+                    <Box component="form" onSubmit={handleLogin} Validate sx={{ mt: 1 }}>
                         <TextField
                             margin="normal"
                             required
                             fullWidth
+                            size="small"
                             id="email"
                             label="Email Address"
                             name="email"
@@ -69,6 +69,7 @@ export default function Login() {
                             margin="normal"
                             required
                             fullWidth
+                             size="small"
                             name="password"
                             label="Password"
                             type="password"
