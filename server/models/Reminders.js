@@ -1,10 +1,9 @@
-const express = require('express');
-const { createReminder, getPatientReminders, deleteReminder } = require('../controllers/reminderContoller');
+const mongoose = require('mongoose');
 
-const router = express.Router();
+const ReminderSchema = new mongoose.Schema({
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  reminderText: { type: String, required: true },
+  dueDate: { type: Date, required: true }
+}, { timestamps: true });
 
-router.post('/', createReminder);
-router.get('/patient/:userId', getPatientReminders);
-router.delete('/:id', deleteReminder);
-
-module.exports = router;
+module.exports = mongoose.model('Reminder', ReminderSchema);
