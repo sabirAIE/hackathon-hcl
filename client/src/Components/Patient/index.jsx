@@ -1,7 +1,31 @@
 import { Card, Grid, Stack, Typography } from '@mui/material'
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import StairsIcon from '@mui/icons-material/Stairs';
+import { AuthContext } from '../../ApiData/AuthContext';
+import API from '../../ApiData/Api';
 function PatientDashBorad() {
+  const {userId}=useContext(AuthContext)
+  const [steps, setSteps] = useState();
+  const [goal, setGoal] = useState();
+  console.log(goal,"cc")
+  useEffect(() => {
+    const fetchStepsData = async () => {
+      try {
+  console.log(userId);
+  
+        const response =  await API.get(`goals/patient/${userId}`, )
+        const data = await response.json();
+        console.log(data)
+        setGoal(data);
+
+      } catch (error) {
+        console.error('Error fetching steps data:', error);
+      }
+    };
+
+    fetchStepsData();
+  }, []);
+
   return (
     <Grid container xs={12} p={2} >
       <Grid xs={6} item display={'flex'} justifyContent={'flex-start'} alignItems={'flex-start'}>
@@ -55,19 +79,19 @@ function PatientDashBorad() {
             </Grid>
           </Grid>
           <Grid xs={12} item display={'flex'} justifyContent={'flex-start'} alignItems={'flex-start'} p={2}>
-            <Card style={{ width: "100%", height: "15vh", background: "white" }} p={3}>
+            <Card style={{ width: "100%", height: "100%", background: "white" }} p={3}>
               <Typography variant='subtitle1' fontWeight={"bold"} p={2}>
                 Preventive Care Reminder
               </Typography>
-              <Typography variant='body1' ml={2}>Upcoming Blood Test march 30</Typography>
+              <Typography variant='body1' ml={2}>{goal && goal[0]?.goalText} {goal && new Date(goal[0].dueDate).toDateString()}</Typography>
             </Card>
           </Grid>
           <Grid xs={12} item display={'flex'} justifyContent={'flex-start'} alignItems={'flex-start'} p={2}>
-            <Card style={{ width: "100%", height: "15vh", background: "white" }} p={3}>
+            <Card style={{ width: "100%", height: "100%", background: "white" }} p={3}>
               <Typography variant='subtitle1' fontWeight={"bold"} p={2}>
-                Preventive Care Reminder
+                Health Care Tips
               </Typography>
-              <Typography variant='body1' ml={2}>Upcoming Blood Test march 30</Typography>
+              <Typography variant='body1' ml={2}>{goal && goal[0]?.goalText} {goal && new Date(goal[0].dueDate).toDateString()}</Typography>
             </Card>
           </Grid>
         </Card>
