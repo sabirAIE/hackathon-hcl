@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import Login from "./Components/Login";
 import { useContext } from "react";
 import { AuthContext, AuthProvider } from "./ApiData/AuthContext";
+import PatientDashBorad from "./Components/Patient";
 
 const PrivateRoute = ({ children }) => {
   const { user } = useContext(AuthContext);
@@ -14,6 +15,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/login" element={<Login />} />
+          <Route path="/patient-dashboard" element={<PatientDashBorad />} />
           <Route path="*" element={<Navigate to="/login" />} />
         </Routes>
       </Router>
