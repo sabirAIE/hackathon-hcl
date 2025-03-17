@@ -32,19 +32,18 @@ export default function Signup() {
 
     const handleLogin = async (e) => {
         e.preventDefault();
+        
         const formData = { name, email, phone, password, role };
         console.log(formData);
-
-        // try {
-        //     const formData = { name, email, phone, password, role };
-        //     // Replace with your API call
-        //     // const { data } = await API.post("/auth/signup", formData);
-        //     // localStorage.setItem("token", data.token);
-        //     // setUser(data.user);
-        //     // navigate("/dashboard");
-        // } catch (error) {
-        //     alert("Sign up failed!");
-        // }
+        try {
+            const formData = { name, email, phone, password, role };
+             const data=await API.post("signup", formData);
+            navigate("/login");
+        } catch (error) {
+            console.log(error);
+            
+            alert("Sign up failed!");
+        }
     };
 
     return (
@@ -127,8 +126,8 @@ export default function Signup() {
                                 onChange={(e) => setRole(e.target.value)}
                                 label="Role"
                             >
-                                <MenuItem value="Patient">Patient</MenuItem>
-                                <MenuItem value="Doctor">Doctor</MenuItem>
+                                <MenuItem value="patient">Patient</MenuItem>
+                                <MenuItem value="provider">provider</MenuItem>
 
                             </Select>
                         </FormControl>

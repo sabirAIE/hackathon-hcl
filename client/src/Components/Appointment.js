@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { TextField, Select, MenuItem, Button, FormControl, InputLabel, Container, Box, CssBaseline } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { AuthContext } from '../ApiData/AuthContext';
 
 const defaultTheme = createTheme();
 const Appointment = () => {
+    const {user}=useContext(AuthContext)
     const [doctor, setDoctor] = useState('');
     const [reason, setReason] = useState('');
     const [appointmentDate, setAppointmentDate] = useState('');
@@ -11,7 +13,6 @@ const Appointment = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log(`Doctor: ${doctor}, Reason: ${reason}, Appointment Date: ${appointmentDate}`);
-        // Handle form submission logic here
     };
 
     return (

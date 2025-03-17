@@ -4,6 +4,7 @@ import { useContext } from "react";
 import { AuthContext, AuthProvider } from "./ApiData/AuthContext";
 import Signup from "./Components/Signup";
 import Appointment from "./Components/Appointment";
+import Appbar from "./Components/Navbar";
 
 const PrivateRoute = ({ children }) => {
   const { user } = useContext(AuthContext);
@@ -14,10 +15,11 @@ function App() {
   return (
     <AuthProvider>
       <Router>
+      <Appbar/>
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/Signup" element={<Signup />} />
-          <Route path="/appointment" element={<Appointment />} />
+          <Route path="/appointment" element={<PrivateRoute><Appointment/></PrivateRoute> } />
           <Route path="*" element={<Navigate to="/login" />} />
         </Routes>
       </Router>

@@ -2,8 +2,6 @@ import * as React from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -18,21 +16,22 @@ const defaultTheme = createTheme();
 
 export default function Login() {
     const { setUser } = useContext(AuthContext);
-    const navigate = useNavigate();
     const [formData, setFormData] = useState({ email: "", password: "" });
-    const [rememberMe, setRememberMe] = useState(false); 
+    const navigate = useNavigate();
 
     const handleLogin = async (e) => {
         e.preventDefault();
         console.log(formData);
-        // try {
-        //     const { data } = await API.post("/auth/login", formData);
-        //     localStorage.setItem("token", data.token);
-        //     setUser(data.user);
-        //     navigate("/dashboard");
-        // } catch (error) {
-        //     alert("Login failed!");
-        // }
+        try {
+            const { data } = await API.post("login",formData);
+            localStorage.setItem("token", data.token);
+            console.log(data.user);
+            setUser(data.user);
+            navigate("/appointment");
+        } catch (error) {
+            console.log(error);
+            alert("Login failed!");
+        }
     };
 
     return (
