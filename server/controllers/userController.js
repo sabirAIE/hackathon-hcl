@@ -8,9 +8,7 @@ exports.getAllPatients = async (req, res) => {
 };
 
 exports.getPatientDetails = async (req, res) => {
-  const patient = await User.findById(req.params.id)
-    .populate('goals')
-    .populate('reminders');
+  const patient = await User.findById(req.params.id);
   if (!patient) return res.status(404).json({ error: 'Patient not found' });
   res.json(patient);
 };
