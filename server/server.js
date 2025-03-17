@@ -4,9 +4,11 @@ const userRoutes = require('./routes/userRoutes');
 const goalRoutes = require('./routes/goalsRoutes');
 const reminderRoutes = require('./routes/reminderRoutes');
 const authRoutes = require("./routes/auth")
+var cors = require('cors')
 
 const app = express();
 app.use(express.json());
+app.use(cors())
 
 app.use("/auth", authRoutes);
 app.use('/users', userRoutes);
