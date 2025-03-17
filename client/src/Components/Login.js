@@ -25,7 +25,7 @@ export default function Login() {
         try {
             const { data } = await API.post("login",formData);
             localStorage.setItem("token", data.token);
-            console.log(data.user);
+            localStorage.setItem("user", data.user);
             setUser(data.user);
             navigate("/appointment");
         } catch (error) {

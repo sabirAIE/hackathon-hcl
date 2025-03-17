@@ -5,6 +5,8 @@ import { AuthContext, AuthProvider } from "./ApiData/AuthContext";
 import Signup from "./Components/Signup";
 import Appointment from "./Components/Appointment";
 import Appbar from "./Components/Navbar";
+import PatientDashBorad from "./Components/Patient";
+
 
 const PrivateRoute = ({ children }) => {
   const { user } = useContext(AuthContext);
@@ -19,7 +21,9 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/Signup" element={<Signup />} />
-          <Route path="/appointment" element={<PrivateRoute><Appointment/></PrivateRoute> } />
+          <Route path="/appointment" element={<Appointment/> } />
+          {/* <Route path="/appointment" element={<PrivateRoute><Appointment/></PrivateRoute> } /> */}
+          <Route path="/patient-dashboard" element={<PatientDashBorad />} />
           <Route path="*" element={<Navigate to="/login" />} />
         </Routes>
       </Router>

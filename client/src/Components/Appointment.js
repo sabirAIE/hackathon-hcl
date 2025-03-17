@@ -2,17 +2,42 @@ import React, { useContext, useState } from 'react';
 import { TextField, Select, MenuItem, Button, FormControl, InputLabel, Container, Box, CssBaseline } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { AuthContext } from '../ApiData/AuthContext';
+import axios from 'axios';
 
 const defaultTheme = createTheme();
+
 const Appointment = () => {
-    const {user}=useContext(AuthContext)
+    const { user,userId} = useContext(AuthContext); 
+   
     const [doctor, setDoctor] = useState('');
     const [reason, setReason] = useState('');
     const [appointmentDate, setAppointmentDate] = useState('');
+    const [appointmentTime, setAppointmentTime] = useState('');
+    const [status, setStatus] = useState('scheduled'); 
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log(`Doctor: ${doctor}, Reason: ${reason}, Appointment Date: ${appointmentDate}`);
+        
+
+        const appointmentData = {
+            userId:userId, 
+            providerId: doctor, 
+            date: appointmentDate, 
+            time: appointmentTime,  
+            status: status, 
+            notes: reason, 
+        };
+
+        try {
+      
+            const response = await axios.post('http://localhost:5000/appointments', appointmentData);
+            console.log('Appointment created:', response.data);
+            alert('Appointment successfully booked!');
+        } catch (error) {
+    
+            console.error('Error creating appointment:', error);
+            alert('There was an error booking your appointment.');
+        }
     };
 
     return (
@@ -29,7 +54,7 @@ const Appointment = () => {
                 >
                     <h2>Book an Appointment</h2>
                     <form onSubmit={handleSubmit}>
-                       
+                  
                         <TextField
                             label="Reason for Appointment"
                             variant="outlined"
@@ -55,7 +80,22 @@ const Appointment = () => {
                                 shrink: true,
                             }}
                         />
-                         <FormControl fullWidth margin="normal">
+                        <TextField
+                            label="Appointment Time"
+                            type="time"
+                            variant="outlined"
+                            fullWidth
+                            margin="normal"
+                            value={appointmentTime}
+                            onChange={(e) => setAppointmentTime(e.target.value)}
+                            required
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                        />
+
+            
+                        <FormControl fullWidth margin="normal">
                             <InputLabel id="doctor-select-label">Select Doctor</InputLabel>
                             <Select
                                 labelId="doctor-select-label"
@@ -68,6 +108,7 @@ const Appointment = () => {
                                 <MenuItem value="doctor3">Doctor 3</MenuItem>
                             </Select>
                         </FormControl>
+                        
                         <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 2 }}>
                             <Button type="submit" variant="contained" color="primary">
                                 Register Appointment

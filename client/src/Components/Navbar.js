@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import { AppBar, Toolbar, Typography, Button, IconButton, Menu, MenuItem } from "@mui/material";
 import { Link } from "react-router-dom";
 import MenuOpenIcon from '@mui/icons-material/MenuOpen';
+import { useContext } from "react";
+import { AuthContext } from "../ApiData/AuthContext";
 
-const Appbar = ({ user }) => {
+const Appbar = () => {
+  const { user, setUser } = useContext(AuthContext);
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleMenuOpen = (event) => {
@@ -15,14 +18,16 @@ const Appbar = ({ user }) => {
   };
 
   const handleLogout = () => {
-  
-    handleMenuClose();
+    localStorage.removeItem("token"); 
+    setUser(null); 
+    handleMenuClose(); 
+    window.location.reload(); 
   };
 
   return (
-    <AppBar position="sticky" style={{backgroundColor:"#80c3ff", }}>
+    <AppBar position="sticky" style={{ backgroundColor: "#80c3ff" }}>
       <Toolbar>
-        <Typography  variant="h6" sx={{ flexGrow: 1 }}>
+        <Typography variant="h6" sx={{ flexGrow: 1 }}>
           Health Care
         </Typography>
 
@@ -37,10 +42,15 @@ const Appbar = ({ user }) => {
               onClose={handleMenuClose}
               keepMounted
             >
+              <MenuItem component={Link} to="/patient-dashboard" onClick={handleMenuClose}>
+                Dashboard
+              </MenuItem>
+              <MenuItem component={Link} to="/appointment" onClick={handleMenuClose}>
+                Book Appointment
+              </MenuItem>
               <MenuItem component={Link} to="/profile" onClick={handleMenuClose}>
                 Profile
               </MenuItem>
-             
               <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </Menu>
           </>
